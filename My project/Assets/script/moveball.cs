@@ -8,32 +8,54 @@ public class moveball : MonoBehaviour
     float Hmove;
     float Vmove;
   public  float speed;
-
+  public float jumpspeed;
+  bool istouching = true;
+     
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
 
-    void Update()
-    {
-        Movement();
-    }
-    // move input
-    void Movement()
+  void FixedUpdate()    
     {
         Hmove = Input.GetAxis("Horizontal");
         Vmove = Input.GetAxis("Vertical");
 
-        //rb.velocity = new Vector3(Hmove, rb.velocity.y, Vmove) * speed
-
-       Vector3 ballmove = new Vector3(Hmove, 0.0f, Vmove);
+        Vector3 ballmove = new Vector3(Hmove, 0.0f, Vmove);
 
         rb.AddForce(ballmove * speed);
 
+        if ((Input.GetKey(KeyCode.Space)) && istouching == true)
+        {
+            Vector3 jumpball = new Vector3(0.0f, 6.0f, 0.0f);
+            rb.AddForce(jumpball * jumpspeed);
+        }
+
+        istouching = false;
     }
+
+    private void Update()
+    {
+
     
-   
+    }
+
+
+
+
+
+
+
+
+
+
+
+    private void OnCollisionStay()
+    {
+        istouching = true;
+    }
+
 
 
 
