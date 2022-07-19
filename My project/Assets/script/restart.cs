@@ -8,6 +8,6 @@ public class restart : MonoBehaviour
     private Scene scene;    
     void OnTriggerEnter()
     { 
-        Application.LoadLevel(scene.name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);   
     }
 }

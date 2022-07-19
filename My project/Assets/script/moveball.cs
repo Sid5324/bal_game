@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class moveball : MonoBehaviour
 {
@@ -10,10 +12,17 @@ public class moveball : MonoBehaviour
   public  float speed;
   public float jumpspeed;
   bool istouching = true;
+    int count = 0;
+    [SerializeField] TextMeshProUGUI scoretext;
+    // public Text scoretext;
+    public AudioSource addsource;
+    public AudioClip MYaudioClip;
      
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        count = 0;
+        scoreText();
     }
 
 
@@ -33,6 +42,8 @@ public class moveball : MonoBehaviour
         }
 
         istouching = false;
+
+
     }
 
     private void Update()
@@ -55,8 +66,21 @@ public class moveball : MonoBehaviour
     {
         istouching = true;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("coins"))
+        {
+            other.gameObject.SetActive(false);
+            count++;
+            scoreText();
+            addsource.PlayOneShot(MYaudioClip);
+        }
+    }
 
-
+    void scoreText()
+    {
+        scoretext.text = "Score:" + count.ToString();
+    }
 
 
 }
